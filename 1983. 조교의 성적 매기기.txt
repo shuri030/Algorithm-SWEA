@@ -1,0 +1,51 @@
+﻿#include <stdio.h>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+string score[11] = {"A+", "A0", "A-", "B+", "B0", "B-", "C+", "C0", "C-", "D0"};
+
+float get_total(int m, int f, int h)
+{
+	return ((m * 35) / 100) + ((f * 45) / 100) + ((h * 20) / 100);
+
+}
+bool compare(pair<float, int> a, pair<float, int> b) 
+{
+	return a.first > b.first;
+}
+int main()
+{
+	vector<pair<float, int> > v;
+	int t, N, K;
+	int mid, fin, hw;
+
+	scanf("%d", &t);
+
+	for(int tc = 1; tc <= t; tc++) {
+		cin >> N >> K;
+
+		for(int i = 0; i < N; i++) {
+			cin.ignore();
+			cin >> mid >> fin >> hw;
+			v.push_back(pair<float, int> (get_total(mid, fin, hw), i + 1));
+		}
+
+		sort(v.begin(), v.end(), compare);
+
+		int n;
+		for(int i = 0; i < N; i++) {
+			if(v[i].second == K) {
+				n = i / (N / 10);
+				break;
+			}
+		}
+		cout << "#" << tc << " " << score[n] << "\n";
+		v.clear();
+	}
+	
+	
+	return 0;
+}
